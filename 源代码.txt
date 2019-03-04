@@ -1,0 +1,22 @@
+imagepath = 'F:\Digital Image Processing\work\The second\Image A.jpg'; %确定所选取图片
+original = imread(imagepath);%读取图片
+figure(1)
+imshow(original)
+hold on
+[x0,y0] = ginput;%取点
+plot(x0,y0,'or');
+imagepath = 'F:\Digital Image Processing\work\The second\Image B.jpg'; %确定所选取图片
+new = imread(imagepath);%读取图片
+figure(2)
+imshow(new)
+hold on
+[x1,y1] = ginput;%取点
+plot(x1,y1,'or');
+tform = cp2tform([x0,y0],[x1,y1],'Affine');%拟合确定参数
+original_rotate = imtransform(original,tform);%对原图变换验证
+figure(3) 
+subplot(1,2,1),imshow(original_rotate); 
+subplot(1,2,2),imshow(new); 
+fixedPoints=[x0,y0]
+movingPoints=[x1,y1]
+H=tform.tdata.Tinv
